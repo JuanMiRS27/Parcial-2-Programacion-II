@@ -1,0 +1,16 @@
+server:
+  port: ${SERVER_PORT:8082}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${PGHOST:${POSTGRES_HOST:localhost}}:${PGPORT:${POSTGRES_PORT:5432}}/${PGDATABASE:${POSTGRES_DATABASE:taller_db}}
+    username: ${PGUSER:${POSTGRES_USER:postgres}}
+    password: ${PGPASSWORD:${POSTGRES_PASSWORD:postgres}}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:bXktc3VwZXItc2VjcmV0LWtleS10YWxsZXItcGFyY2lhbC0yMDI2}
