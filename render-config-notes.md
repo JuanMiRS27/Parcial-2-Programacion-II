@@ -2,8 +2,7 @@
 
 ## Servicios a crear
 
-1. Base de datos MySQL externa/compatible (para `auth-admin-users`).
-2. Base de datos PostgreSQL (Render PostgreSQL o externa) para `taller-mecanico`.
+1. Base de datos PostgreSQL (Render PostgreSQL o externa) compartida para `auth-admin-users` y `taller-mecanico`.
 3. Web Service: `auth-admin-users`.
 4. Web Service: `taller-mecanico`.
 5. Static Site para `frontend`.
@@ -16,11 +15,11 @@
 - Variables:
   - `PORT=8080`
   - `SERVER_PORT=${PORT}`
-  - `MYSQLHOST=turntable.proxy.rlwy.net`
-  - `MYSQLPORT=54977`
-  - `MYSQLDATABASE=railway`
-  - `MYSQLUSER=root`
-  - `MYSQLPASSWORD=MUKPzToxCxzxsXkBbhExEduxrogBl0RR`
+- `PGHOST=dpg-d7v2f7naqgkc73d3dllg-a.oregon-postgres.render.com`
+- `PGPORT=5432`
+- `PGDATABASE=tallermecanico_db`
+- `PGUSER=tallermecanico_db_user`
+- `PGPASSWORD=OUW8tl9BjzyI7s4i0P8dqIHzTSbf3TJs`
   - `JWT_SECRET=...` (base64)
   - `JWT_EXPIRATION=86400000`
   - `APP_CORS_ORIGINS=https://parcial-2-programacion-ii-2.onrender.com`

@@ -1,24 +1,4 @@
 services:
-  mysql-auth:
-    image: mysql:8.0
-    container_name: mysql-auth
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: auth_db
-      MYSQL_USER: auth_user
-      MYSQL_PASSWORD: auth_pass
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_auth_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
-      interval: 10s
-      timeout: 5s
-      retries: 20
-    networks:
-      - taller-net
-
   postgres-taller:
     image: postgres:16
     container_name: postgres-taller
@@ -44,15 +24,15 @@ services:
     container_name: auth-admin-users
     environment:
       SERVER_PORT: 8081
-      MYSQL_HOST: mysql-auth
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: auth_db
-      MYSQL_USER: auth_user
-      MYSQL_PASSWORD: auth_pass
+      POSTGRES_HOST: postgres-taller
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: taller_db
+      POSTGRES_USER: taller_user
+      POSTGRES_PASSWORD: taller_pass
       JWT_SECRET: ${JWT_SECRET:-bXktc3VwZXItc2VjcmV0LWtleS10YWxsZXItcGFyY2lhbC0yMDI2}
       JWT_EXPIRATION: 86400000
     depends_on:
-      mysql-auth:
+      postgres-taller:
         condition: service_healthy
     ports:
       - "8081:8081"
@@ -92,7 +72,6 @@ services:
       - taller-net
 
 volumes:
-  mysql_auth_data:
   postgres_taller_data:
 
 networks:
