@@ -1,0 +1,11 @@
+<main class="card">
+  <h2>Registro</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input formControlName="nombre" placeholder="Nombre">
+    <input formControlName="email" placeholder="Email">
+    <input type="password" formControlName="password" placeholder="Password">
+    <button>Registrar</button>
+  </form>
+  <p class="error">{{ error }}</p>
+  <a routerLink="/login">Volver al login</a>
+</main>

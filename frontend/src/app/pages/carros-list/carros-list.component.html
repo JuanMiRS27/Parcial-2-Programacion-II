@@ -1,0 +1,16 @@
+<app-header></app-header>
+<main class="content">
+  <h2>Carros en taller</h2>
+  <button (click)="goCreate()">Crear carro</button>
+  <table>
+    <tr><th>ID</th><th>Placa</th><th>Modelo</th><th>Estado</th><th>Acciones</th></tr>
+    <tr *ngFor="let c of carros">
+      <td>{{ c.id }}</td><td>{{ c.placa }}</td><td>{{ c.modelo }}</td><td>{{ c.estado }}</td>
+      <td>
+        <a [routerLink]="['/carros/detalle', c.id]">Detalle</a>
+        <a *ngIf="isAdmin()" [routerLink]="['/carros/editar', c.id]">Editar</a>
+        <button *ngIf="isAdmin()" (click)="delete(c.id)">Eliminar</button>
+      </td>
+    </tr>
+  </table>
+</main>

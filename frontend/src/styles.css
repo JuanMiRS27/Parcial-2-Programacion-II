@@ -1,0 +1,9 @@
+body { margin: 0; font-family: Arial, sans-serif; background: #0b1830; color: #e5edff; }
+.header { padding: 12px 16px; background: #10264a; display: flex; justify-content: space-between; align-items: center; }
+button, input, select, a { margin: 4px; padding: 8px; border-radius: 6px; border: 1px solid #2e4c7f; background: #132f58; color: #f0f6ff; }
+a { text-decoration: none; display: inline-block; }
+.content, .card { padding: 16px; max-width: 980px; margin: 14px auto; }
+.card { max-width: 420px; background: #11274a; }
+table { width: 100%; border-collapse: collapse; background: #11274a; }
+th, td { border: 1px solid #2e4c7f; padding: 8px; text-align: left; }
+.error { color: #ffb0b0; }
