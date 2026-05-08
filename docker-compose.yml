@@ -1,0 +1,87 @@
+services:
+  mysql-auth:
+    image: mysql:8.4
+    container_name: mysql-auth
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: auth_db
+      MYSQL_USER: auth_user
+      MYSQL_PASSWORD: auth_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_auth_data:/var/lib/mysql
+    networks:
+      - taller-net
+
+  postgres-taller:
+    image: postgres:16
+    container_name: postgres-taller
+    environment:
+      POSTGRES_DB: taller_db
+      POSTGRES_USER: taller_user
+      POSTGRES_PASSWORD: taller_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_taller_data:/var/lib/postgresql/data
+    networks:
+      - taller-net
+
+  auth-admin-users:
+    build:
+      context: ./backend/auth-admin-users
+    container_name: auth-admin-users
+    environment:
+      SERVER_PORT: 8081
+      MYSQL_HOST: mysql-auth
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: auth_db
+      MYSQL_USER: auth_user
+      MYSQL_PASSWORD: auth_pass
+      JWT_SECRET: ${JWT_SECRET:-bXktc3VwZXItc2VjcmV0LWtleS10YWxsZXItcGFyY2lhbC0yMDI2}
+      JWT_EXPIRATION: 86400000
+    depends_on:
+      - mysql-auth
+    ports:
+      - "8081:8081"
+    networks:
+      - taller-net
+
+  taller-mecanico:
+    build:
+      context: ./backend/taller-mecanico
+    container_name: taller-mecanico
+    environment:
+      SERVER_PORT: 8082
+      POSTGRES_HOST: postgres-taller
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: taller_db
+      POSTGRES_USER: taller_user
+      POSTGRES_PASSWORD: taller_pass
+      JWT_SECRET: ${JWT_SECRET:-bXktc3VwZXItc2VjcmV0LWtleS10YWxsZXItcGFyY2lhbC0yMDI2}
+    depends_on:
+      - postgres-taller
+    ports:
+      - "8082:8082"
+    networks:
+      - taller-net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: taller-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - auth-admin-users
+      - taller-mecanico
+    networks:
+      - taller-net
+
+volumes:
+  mysql_auth_data:
+  postgres_taller_data:
+
+networks:
+  taller-net:
