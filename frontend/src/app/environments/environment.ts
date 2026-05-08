@@ -1,4 +1,4 @@
 export const environment = {
-  authApiUrl: 'http://localhost:8081',
-  tallerApiUrl: 'http://localhost:8082'
+  authApiUrl: 'https://parcial-2-programacion-ii.onrender.com',
+  tallerApiUrl: 'https://parcial-2-programacion-ii-1.onrender.com'
 };

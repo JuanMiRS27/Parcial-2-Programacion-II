@@ -1,4 +1,4 @@
-# Render - Configuración sugerida
+# Render - Configuracion sugerida
 
 ## Servicios a crear
 
@@ -6,7 +6,7 @@
 2. Base de datos PostgreSQL (Render PostgreSQL o externa) para `taller-mecanico`.
 3. Web Service: `auth-admin-users`.
 4. Web Service: `taller-mecanico`.
-5. Static Site o Web Service para `frontend`.
+5. Static Site para `frontend`.
 
 ## Auth service en Render
 
@@ -16,13 +16,14 @@
 - Variables:
   - `PORT=8080`
   - `SERVER_PORT=${PORT}`
-  - `MYSQLHOST=mysql.railway.internal`
-  - `MYSQLPORT=3306`
+  - `MYSQLHOST=turntable.proxy.rlwy.net`
+  - `MYSQLPORT=54977`
   - `MYSQLDATABASE=railway`
   - `MYSQLUSER=root`
-  - `MYSQLPASSWORD=MUKPzToxCxzxsXkBbhExEduxrogBlORR`
+  - `MYSQLPASSWORD=MUKPzToxCxzxsXkBbhExEduxrogBl0RR`
   - `JWT_SECRET=...` (base64)
   - `JWT_EXPIRATION=86400000`
+  - `APP_CORS_ORIGINS=https://parcial-2-programacion-ii-2.onrender.com`
 
 ## Taller service en Render
 
@@ -32,13 +33,13 @@
 - Variables:
   - `PORT=8080`
   - `SERVER_PORT=${PORT}`
-  - `PGHOST=dpg-d7v2f7naqgkc73d3dllg-a` (si ambos servicios están en Render, red interna)
-  - `POSTGRES_HOST=dpg-d7v2f7naqgkc73d3dllg-a.oregon-postgres.render.com` (si conectas por URL externa)
+  - `PGHOST=dpg-d7v2f7naqgkc73d3dllg-a.oregon-postgres.render.com`
   - `PGPORT=5432`
   - `PGDATABASE=tallermecanico_db`
   - `PGUSER=tallermecanico_db_user`
   - `PGPASSWORD=OUW8tl9BjzyI7s4i0P8dqIHzTSbf3TJs`
   - `JWT_SECRET=...` (el mismo de auth)
+  - `APP_CORS_ORIGINS=https://parcial-2-programacion-ii-2.onrender.com`
 
 ## Frontend en Render
 
@@ -46,14 +47,13 @@
 - Build command: `npm install && npm run build`
 - Publish directory (Static Site): `dist/frontend/browser`
 
-Para producción, usar URLs públicas de Render:
-- `AUTH_API_URL=https://auth-admin-users.onrender.com`
-- `TALLER_API_URL=https://taller-mecanico.onrender.com`
-
-Nota: los nombres reales dependen del nombre final de cada servicio en Render.
+URLs publicas usadas en este proyecto:
+- `AUTH_API_URL=https://parcial-2-programacion-ii.onrender.com`
+- `TALLER_API_URL=https://parcial-2-programacion-ii-1.onrender.com`
+- `FRONTEND_URL=https://parcial-2-programacion-ii-2.onrender.com`
 
 ## Importante
 
-- Nunca usar `localhost` en producción.
+- Nunca usar `localhost` en produccion.
 - Configurar CORS en backend para dominio del frontend desplegado.
 - Ambos microservicios deben compartir exactamente la misma `JWT_SECRET`.
