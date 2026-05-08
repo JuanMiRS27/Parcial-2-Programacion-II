@@ -1,7 +1,9 @@
 package com.taller.auth.controller;
 
+import com.taller.auth.dto.request.RoleUpdateRequest;
 import com.taller.auth.dto.response.UserResponse;
 import com.taller.auth.service.UserAdminService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +30,10 @@ public class AdminUserController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userAdminService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/role")
+    public UserResponse updateRole(@PathVariable Long id, @Valid @RequestBody RoleUpdateRequest request) {
+        return userAdminService.updateRole(id, request.getRole());
     }
 }

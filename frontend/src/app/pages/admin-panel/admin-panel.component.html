@@ -2,11 +2,36 @@
 <main class="content">
   <h2>Panel de administrador</h2>
   <p>Solo usuarios ADMIN pueden ver esta página.</p>
+  <p class="error" *ngIf="error">{{ error }}</p>
+  <h3>Usuarios</h3>
   <table>
-    <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
+    <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Cambiar rol</th><th>Acciones</th></tr>
     <tr *ngFor="let u of users">
       <td>{{ u.id }}</td><td>{{ u.nombre }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td>
-      <td><button (click)="delete(u.id)">Eliminar</button></td>
+      <td class="actions">
+        <select #roleSel>
+          <option *ngFor="let r of roles" [value]="r" [selected]="r===u.role">{{ r }}</option>
+        </select>
+        <button (click)="updateRole(u, roleSel.value)">Actualizar</button>
+      </td>
+      <td class="actions"><button (click)="delete(u.id)">Eliminar</button></td>
+    </tr>
+  </table>
+
+  <h3 style="margin-top:18px;">Gestión de estado de carros</h3>
+  <table>
+    <tr><th>ID</th><th>Placa</th><th>Modelo</th><th>Estado actual</th><th>Cambiar estado</th></tr>
+    <tr *ngFor="let c of carros">
+      <td>{{ c.id }}</td>
+      <td>{{ c.placa }}</td>
+      <td>{{ c.modelo }}</td>
+      <td>{{ c.estado }}</td>
+      <td class="actions">
+        <select #estadoSel>
+          <option *ngFor="let e of estados" [value]="e" [selected]="e===c.estado">{{ e }}</option>
+        </select>
+        <button (click)="updateEstadoFromSelect(c, estadoSel.value)">Actualizar</button>
+      </td>
     </tr>
   </table>
 </main>

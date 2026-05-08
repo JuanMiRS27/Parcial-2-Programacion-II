@@ -5,7 +5,10 @@
     <input formControlName="placa" placeholder="Placa">
     <input formControlName="modelo" placeholder="Modelo">
     <input type="date" formControlName="fechaIngreso">
-    <select formControlName="estado"><option *ngFor="let e of estados" [value]="e">{{ e }}</option></select>
+    <select formControlName="estado" [disabled]="!isAdmin()">
+      <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+    </select>
+    <small *ngIf="!isAdmin()">Como USER, el estado se registrará automáticamente en EN_REVISION.</small>
     <input formControlName="tipoDanio" placeholder="Tipo daño">
     <button>Guardar</button>
   </form>

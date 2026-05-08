@@ -5,6 +5,7 @@ import { CarrosService } from '../../core/services/carros.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { inject } from '@angular/core';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   standalone: true,
@@ -13,6 +14,7 @@ import { inject } from '@angular/core';
 })
 export class CarroCreateComponent {
   private fb = inject(FormBuilder);
+  private auth = inject(AuthService);
   estados = ['RECIBIDO', 'EN_REVISION', 'EN_REPARACION', 'REPARADO', 'ENTREGADO'];
   form = this.fb.group({
     placa: ['', Validators.required],
@@ -22,8 +24,13 @@ export class CarroCreateComponent {
     tipoDanio: ['', Validators.required]
   });
   constructor(private service: CarrosService, private router: Router) {}
+  isAdmin() { return this.auth.isAdmin(); }
   save() {
     if (this.form.invalid) return;
-    this.service.create(this.form.getRawValue() as any).subscribe(() => this.router.navigate(['/carros']));
+    const payload: any = this.form.getRawValue();
+    if (!this.isAdmin()) {
+      payload.estado = 'EN_REVISION';
+    }
+    this.service.create(payload).subscribe(() => this.router.navigate(['/carros']));
   }
 }

@@ -1,10 +1,12 @@
-<main class="card">
-  <h2>Login</h2>
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <input formControlName="email" placeholder="Email">
-    <input type="password" formControlName="password" placeholder="Password">
-    <button>Ingresar</button>
-  </form>
-  <p class="error">{{ error }}</p>
-  <a routerLink="/register">Crear cuenta</a>
-</main>
+<section class="auth-shell">
+  <main class="card">
+    <h2>Iniciar sesión</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <input formControlName="email" placeholder="Correo electrónico">
+      <input type="password" formControlName="password" placeholder="Contraseña">
+      <button>Ingresar</button>
+    </form>
+    <p class="error">{{ error }}</p>
+    <a class="link-btn" routerLink="/register">Crear cuenta</a>
+  </main>
+</section>

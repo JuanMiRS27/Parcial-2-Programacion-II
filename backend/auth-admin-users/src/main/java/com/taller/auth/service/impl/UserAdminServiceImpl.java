@@ -3,6 +3,8 @@ package com.taller.auth.service.impl;
 import com.taller.auth.dto.response.UserResponse;
 import com.taller.auth.exception.ResourceNotFoundException;
 import com.taller.auth.mapper.UserMapper;
+import com.taller.auth.model.Role;
+import com.taller.auth.model.User;
 import com.taller.auth.repository.UserRepository;
 import com.taller.auth.service.UserAdminService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +35,13 @@ public class UserAdminServiceImpl implements UserAdminService {
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserResponse updateRole(Long id, Role role) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        user.setRole(role);
+        return userMapper.toResponse(userRepository.save(user));
     }
 }

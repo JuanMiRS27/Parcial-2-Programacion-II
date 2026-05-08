@@ -11,6 +11,7 @@ public interface CarroTallerService {
     CarroResponse findById(Long id);
     CarroResponse create(CarroRequest request);
     CarroResponse update(Long id, CarroRequest request);
+    CarroResponse updateEstado(Long id, EstadoCarro estado);
     void delete(Long id);
     List<CarroResponse> findByEstado(EstadoCarro estado);
     CarroResponse findByPlaca(String placa);

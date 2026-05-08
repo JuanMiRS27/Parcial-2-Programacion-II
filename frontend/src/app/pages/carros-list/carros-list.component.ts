@@ -13,9 +13,18 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class CarrosListComponent implements OnInit {
   carros: CarroTaller[] = [];
+  error = '';
   constructor(private service: CarrosService, private auth: AuthService, private router: Router) {}
   ngOnInit() { this.load(); }
-  load() { this.service.findAll().subscribe((r) => this.carros = r); }
+  load() {
+    this.service.findAll().subscribe({
+      next: (r) => {
+        this.carros = r;
+        this.error = '';
+      },
+      error: () => this.error = 'No se pudieron cargar los carros'
+    });
+  }
   isAdmin() { return this.auth.isAdmin(); }
   goCreate() { this.router.navigate(['/carros/crear']); }
   delete(id?: number) {

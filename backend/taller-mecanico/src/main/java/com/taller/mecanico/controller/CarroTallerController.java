@@ -1,6 +1,7 @@
 package com.taller.mecanico.controller;
 
 import com.taller.mecanico.dto.request.CarroRequest;
+import com.taller.mecanico.dto.request.EstadoRequest;
 import com.taller.mecanico.dto.response.CarroResponse;
 import com.taller.mecanico.model.EstadoCarro;
 import com.taller.mecanico.service.CarroTallerService;
@@ -28,6 +29,11 @@ public class CarroTallerController {
 
     @PutMapping("/{id}")
     public CarroResponse update(@PathVariable Long id, @Valid @RequestBody CarroRequest request) { return service.update(id, request); }
+
+    @PutMapping("/{id}/estado")
+    public CarroResponse updateEstado(@PathVariable Long id, @Valid @RequestBody EstadoRequest request) {
+        return service.updateEstado(id, request.getEstado());
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

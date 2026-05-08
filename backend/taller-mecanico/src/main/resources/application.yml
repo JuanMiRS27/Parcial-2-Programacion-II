@@ -14,3 +14,5 @@ spring:
 app:
   jwt:
     secret: ${JWT_SECRET:bXktc3VwZXItc2VjcmV0LWtleS10YWxsZXItcGFyY2lhbC0yMDI2}
+  cors:
+    origins: ${APP_CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200}

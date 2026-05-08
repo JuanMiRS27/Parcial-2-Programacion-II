@@ -10,6 +10,7 @@ import com.taller.mecanico.model.EstadoCarro;
 import com.taller.mecanico.repository.CarroTallerRepository;
 import com.taller.mecanico.service.CarroTallerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +39,11 @@ public class CarroTallerServiceImpl implements CarroTallerService {
         }
         CarroTaller c = new CarroTaller();
         mapper.updateEntity(c, request);
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()));
+        if (!isAdmin) {
+            c.setEstado(EstadoCarro.EN_REVISION);
+        }
         return mapper.toResponse(repository.save(c));
     }
 
@@ -46,6 +52,14 @@ public class CarroTallerServiceImpl implements CarroTallerService {
         CarroTaller c = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Carro no encontrado"));
         mapper.updateEntity(c, request);
+        return mapper.toResponse(repository.save(c));
+    }
+
+    @Override
+    public CarroResponse updateEstado(Long id, EstadoCarro estado) {
+        CarroTaller c = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Carro no encontrado"));
+        c.setEstado(estado);
         return mapper.toResponse(repository.save(c));
     }
 
